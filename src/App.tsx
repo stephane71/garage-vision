@@ -12,7 +12,11 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <div className="mx-auto max-w-3xl p-4">
         <h1 className="mb-10 text-center text-2xl">{APP_NAME}</h1>
-        <VehicleCard vehicle={MOCK_VEHICLES[2]} />
+        <div className="flex flex-col gap-4">
+          {MOCK_VEHICLES.map((vehicle) => (
+            <VehicleCard key={vehicle.id} vehicle={vehicle} />
+          ))}
+        </div>
       </div>
 
       <ReactQueryDevtools initialIsOpen={false} />
