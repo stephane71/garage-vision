@@ -3,6 +3,11 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { MOCK_VEHICLES } from "./mock/data.ts";
 import { VehicleCard } from "./components/VehicleCard";
 import { useState } from "react";
+import {
+  type VehicleFilter,
+  VehicleFilters,
+} from "./components/VehicleFilters";
+import type { InspectionStatus, Vehicle } from "@/types";
 
 const queryClient = new QueryClient();
 
@@ -10,10 +15,27 @@ const APP_NAME = "Garage Vision";
 
 function App() {
   const [selectedVehicleId, setSelectedVehicleId] = useState("");
+  const [vehicleList, setVehicleList] = useState(MOCK_VEHICLES);
+  const [filters, setFilters] = useState<VehicleFilter>({});
 
   const handleClickVehicle = (id: string) => {
     const selectedVehicle = id === selectedVehicleId ? "" : id;
     setSelectedVehicleId(selectedVehicle);
+  };
+
+  const handleClickFilter = (
+    filter: keyof Pick<Vehicle, "status" | "year">,
+    value?: InspectionStatus,
+  ) => {
+    let newVehicleList = MOCK_VEHICLES;
+
+    if (filter === "status" && value) {
+      newVehicleList = MOCK_VEHICLES.filter((v) => v.status === value);
+    }
+
+    setVehicleList(newVehicleList);
+    setSelectedVehicleId("");
+    setFilters({ ...filters, [filter]: value });
   };
 
   return (
@@ -23,8 +45,11 @@ function App() {
         <div className={selectedVehicleId ? "" : "invisible"}>
           Véhicule sélectionné: {selectedVehicleId}
         </div>
+
+        <VehicleFilters onClickFilter={handleClickFilter} filters={filters} />
+
         <div className="flex flex-col gap-4">
-          {MOCK_VEHICLES.map((vehicle) => (
+          {vehicleList.map((vehicle) => (
             <VehicleCard
               key={vehicle.id}
               vehicle={vehicle}
