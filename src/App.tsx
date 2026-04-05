@@ -14,7 +14,13 @@ function App() {
         <h1 className="mb-10 text-center text-2xl">{APP_NAME}</h1>
         <div className="flex flex-col gap-4">
           {MOCK_VEHICLES.map((vehicle) => (
-            <VehicleCard key={vehicle.id} vehicle={vehicle} />
+            <VehicleCard
+              key={vehicle.id}
+              vehicle={vehicle}
+              onClick={(id) => {
+                alert("clicked " + id);
+              }}
+            />
           ))}
         </div>
       </div>
