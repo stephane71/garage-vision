@@ -7,7 +7,7 @@ export type VehicleProps = {
 
 export const Vehicle = ({ vehicle }: VehicleProps) => {
   return (
-    <div className="flex gap-4">
+    <div className="flex w-full justify-between gap-4">
       <div>
         <div>
           {vehicle.make} {vehicle.model} {vehicle.year}
