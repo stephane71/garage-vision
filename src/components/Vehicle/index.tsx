@@ -14,8 +14,11 @@ export const Vehicle = ({ vehicle }: VehicleProps) => {
         </div>
         <div>{vehicle.licensePlate}</div>
       </div>
-      <div className="flex items-center">
+      <div className="flex flex-col gap-1">
         <VehicleStatus status={vehicle.status} />
+        {vehicle.inspectionDate && (
+          <div className="text-sm text-gray-500">{vehicle.inspectionDate}</div>
+        )}
       </div>
     </div>
   );
