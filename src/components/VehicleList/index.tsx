@@ -1,4 +1,4 @@
-import { VehicleCard } from "@/components/VehicleCard";
+import { VehicleCardMemo } from "@/components/VehicleCard";
 import type { Vehicle } from "@/types";
 import { Spinner } from "@/components/ui/spinner.tsx";
 
@@ -29,7 +29,7 @@ export const VehicleList = ({
   return (
     <div className="flex flex-col gap-4">
       {vehicleList.map((vehicle) => (
-        <VehicleCard
+        <VehicleCardMemo
           key={vehicle.id}
           vehicle={vehicle}
           isSelected={vehicle.id === selectedVehicleId}

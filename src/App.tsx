@@ -1,6 +1,6 @@
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   type VehicleFilter,
   VehicleFilters,
@@ -17,7 +17,6 @@ const APP_NAME = "Garage Vision";
 function App() {
   const [selectedVehicleId, setSelectedVehicleId] = useState("");
   const [vehicleList, setVehicleList] = useState<Vehicle[]>([]);
-  const [vehicleListFiltered, setVehicleListFiltered] = useState<Vehicle[]>([]);
   const [filters, setFilters] = useState<VehicleFilter>({});
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -38,23 +37,20 @@ function App() {
     fetchVehicles();
   }, []);
 
-  useEffect(() => {
-    const filtered = filterVehicles(vehicleList, filters);
-    setVehicleListFiltered(filtered);
+  const vehicleListFiltered: Vehicle[] = useMemo(() => {
+    return filterVehicles(vehicleList, filters);
   }, [filters, vehicleList]);
 
-  const handleClickVehicle = (id: string) => {
-    const selectedVehicle = id === selectedVehicleId ? "" : id;
-    setSelectedVehicleId(selectedVehicle);
-  };
+  const handleClickVehicle = useCallback((id: string) => {
+    setSelectedVehicleId((currentSelectedVehicleId) =>
+      id === currentSelectedVehicleId ? "" : id,
+    );
+  }, []);
 
   const handleClickFilter = (
     filter: keyof Pick<Vehicle, "status" | "year">,
     value?: InspectionStatus,
   ) => {
-    const filtered = filterVehicles(vehicleList, filters);
-
-    setVehicleListFiltered(filtered);
     setSelectedVehicleId("");
     setFilters({ ...filters, [filter]: value });
   };

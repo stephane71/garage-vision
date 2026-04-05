@@ -1,6 +1,7 @@
 import { Vehicle } from "../Vehicle";
-import { Card } from "../../ui/Card";
+import { Card } from "@/ui/Card";
 import type { Vehicle as VehicleType } from "../../types";
+import { memo } from "react";
 
 export type VehicleCardProps = {
   borderRadius?: number;
@@ -25,3 +26,5 @@ export const VehicleCard = ({
     </Card>
   );
 };
+
+export const VehicleCardMemo = memo(VehicleCard);
