@@ -14,6 +14,7 @@ import {
   CreateInspectionForm,
   type InspectionFormData,
 } from "@/components/CreateInspectionForm";
+import { CreateInspectionRHF } from "@/components/CreateInspectionRHF";
 
 const queryClient = new QueryClient();
 
@@ -89,6 +90,7 @@ function App() {
 
           <div className="w-full">
             <CreateInspectionForm onSubmit={handleSubmitCreateInspectionForm} />
+            <CreateInspectionRHF onSubmit={handleSubmitCreateInspectionForm} />
           </div>
         </div>
       </div>
